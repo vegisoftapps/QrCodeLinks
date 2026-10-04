@@ -1,0 +1,799 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Card &amp; Social Links</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: #030712;
+            color: #F8FAFC;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px 16px;
+            background-image: radial-gradient(circle at top right, rgba(56, 189, 248, 0.08), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.08), transparent 40%);
+        }
+        .container {
+            max-width: 460px;
+            width: 100%;
+            margin: auto;
+        }
+
+        /* Card Container Styles */
+        .card {
+            border-radius: 28px;
+            padding: 32px 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15);
+            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .sheen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        /* Profile Hub Specific Header */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .profile-avatar {
+            width: 86px;
+            height: 86px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+        .profile-name {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #FFFFFF;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .badge-verified {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+        }
+        .profile-handle {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+            margin-bottom: 10px;
+        }
+        .profile-bio {
+            font-size: 14px;
+            color: #CBD5E1;
+            line-height: 1.5;
+            padding: 0 8px;
+            margin-bottom: 16px;
+        }
+
+        /* Visiting Card Specific Header */
+        .card-header-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .card-avatar {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 800;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+        .card-title-group h1 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #FFFFFF;
+            line-height: 1.2;
+        }
+        .card-title-group p.job {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+        .card-title-group p.company {
+            font-size: 13px;
+            color: #94A3B8;
+            margin-top: 2px;
+        }
+
+        /* Buttons & Actions */
+        .hero-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .btn-action-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: #FFFFFF;
+            font-weight: 800;
+            font-size: 15px;
+            padding: 15px 20px;
+            border-radius: 18px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .btn-action-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(16, 185, 129, 0.5);
+        }
+
+        .quick-contact-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .quick-contact-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 6px;
+            border-radius: 16px;
+            color: #F8FAFC;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+        .quick-contact-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        .quick-contact-btn span.icon {
+            font-size: 20px;
+        }
+
+        .bio-box {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 14px 18px;
+            font-size: 13.5px;
+            color: #CBD5E1;
+            line-height: 1.55;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            text-decoration: none;
+            color: #F1F5F9;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+        }
+
+        /* Linktree Style Bio Links */
+        .bio-links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .bio-link-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            text-decoration: none;
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.25s ease;
+            text-align: left;
+        }
+        .bio-link-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        .bio-link-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        .bio-link-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        .bio-link-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+        .bio-link-sub {
+            font-size: 12px;
+            color: #94A3B8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+        .bio-link-arrow {
+            font-size: 16px;
+            color: #64748B;
+            transition: 0.2s ease;
+        }
+        .bio-link-card:hover .bio-link-arrow {
+            color: #38BDF8;
+            transform: translateX(4px);
+        }
+
+        .social-chips-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .social-chip {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .social-chip:hover {
+            background: #38BDF8;
+            color: #051024;
+            transform: translateY(-2px);
+        }
+
+        .footer-tag {
+            text-align: center;
+            font-size: 11px;
+            color: #64748B;
+            margin-top: 24px;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="cardContainer">
+            <div class="sheen"></div>
+            
+            <!-- SECTION 1: VISITING CARD VIEW (Visible when type=card) -->
+            <div id="visitingCardSection" style="display: none;">
+                <div class="card-header-row">
+                    <div class="card-avatar" id="cardAvatar">VC</div>
+                    <div class="card-title-group">
+                        <h1 id="cardFullName">Executive Contact</h1>
+                        <p class="job" id="cardJobTitle" style="display: none;"></p>
+                        <p class="company" id="cardCompany" style="display: none;"></p>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <button class="btn-action-primary" onclick="saveContactToPhone()">
+                        <span style="font-size: 18px;">📥</span>
+                        <span>Save Contact to Phone</span>
+                    </button>
+
+                    <div class="quick-contact-bar" id="quickContactBar">
+                        <a href="#" id="quickCall" class="quick-contact-btn" style="display: none;">
+                            <span class="icon">📞</span>
+                            <span>Call</span>
+                        </a>
+                        <a href="#" id="quickWhatsApp" target="_blank" class="quick-contact-btn" style="display: none;">
+                            <span class="icon">💬</span>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="#" id="quickEmail" class="quick-contact-btn" style="display: none;">
+                            <span class="icon">✉️</span>
+                            <span>Email</span>
+                        </a>
+                        <a href="#" id="quickWeb" target="_blank" class="quick-contact-btn" style="display: none;">
+                            <span class="icon">🌐</span>
+                            <span>Website</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bio-box" id="cardBio" style="display: none;"></div>
+                <div class="contact-list" id="cardContactList"></div>
+                <div class="social-chips-row" id="cardSocialChips" style="display: none;"></div>
+            </div>
+
+            <!-- SECTION 2: SOCIAL PROFILE BIO HUB VIEW (Visible when type=profile) -->
+            <div id="socialProfileSection" style="display: none;">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profileAvatar">SH</div>
+                    <h1 class="profile-name">
+                        <span id="profileDisplayName">Creator Name</span>
+                        <span class="badge-verified" id="profileBadge">✓</span>
+                    </h1>
+                    <div class="profile-handle" id="profileHandle">@username</div>
+                    <p class="profile-bio" id="profileBio" style="display: none;"></p>
+                </div>
+
+                <div class="hero-actions">
+                    <button class="btn-action-primary" id="btnShareProfile" onclick="shareProfilePage()">
+                        <span style="font-size: 18px;">🔗</span>
+                        <span>Share Profile Hub</span>
+                    </button>
+                </div>
+
+                <div class="bio-links-list" id="profileLinksList"></div>
+            </div>
+
+            <div class="footer-tag" id="footerText">QR Code Scanner &amp; Generator Studio</div>
+        </div>
+    </div>
+
+    <script>
+        // Color Themes
+        const THEMES = {
+            "royal_sapphire": {
+                bg: "linear-gradient(155deg, #051024, #0F2454)",
+                accent: "#38BDF8",
+                border: "rgba(56, 189, 248, 0.4)",
+                shadow: "rgba(56, 189, 248, 0.15)"
+            },
+            "midnight_gold": {
+                bg: "linear-gradient(155deg, #0B0D13, #181E2B)",
+                accent: "#E5C06E",
+                border: "rgba(229, 192, 110, 0.4)",
+                shadow: "rgba(229, 192, 110, 0.15)"
+            },
+            "ruby_prestige": {
+                bg: "linear-gradient(155deg, #230713, #4A0E2A)",
+                accent: "#FB7185",
+                border: "rgba(251, 113, 133, 0.4)",
+                shadow: "rgba(251, 113, 133, 0.15)"
+            },
+            "amethyst_silk": {
+                bg: "linear-gradient(155deg, #130924, #2A144E)",
+                accent: "#C084FC",
+                border: "rgba(192, 132, 252, 0.4)",
+                shadow: "rgba(192, 132, 252, 0.15)"
+            },
+            "emerald_royale": {
+                bg: "linear-gradient(155deg, #022118, #094334)",
+                accent: "#34D399",
+                border: "rgba(52, 211, 153, 0.4)",
+                shadow: "rgba(52, 211, 153, 0.15)"
+            },
+            "modern_tech": {
+                bg: "linear-gradient(155deg, #051024, #0F2454)",
+                accent: "#38BDF8",
+                border: "rgba(56, 189, 248, 0.4)",
+                shadow: "rgba(56, 189, 248, 0.15)"
+            },
+            "minimalist_luxe": {
+                bg: "linear-gradient(155deg, #0B0D13, #181E2B)",
+                accent: "#E5C06E",
+                border: "rgba(229, 192, 110, 0.4)",
+                shadow: "rgba(229, 192, 110, 0.15)"
+            }
+        };
+
+        // Social Platform Brand Configs
+        const PLATFORM_COLORS = {
+            "facebook": { bg: "#1877F2", label: "FB" },
+            "tiktok": { bg: "#010101", label: "TT" },
+            "youtube": { bg: "#FF0000", label: "YT" },
+            "linkedin": { bg: "#0A66C2", label: "IN" },
+            "instagram": { bg: "#E4405F", label: "IG" },
+            "twitter": { bg: "#000000", label: "X" },
+            "whatsapp": { bg: "#25D366", label: "WA" },
+            "telegram": { bg: "#229ED9", label: "TG" },
+            "github": { bg: "#24292E", label: "GH" },
+            "discord": { bg: "#5865F2", label: "DC" },
+            "snapchat": { bg: "#FFFC00", label: "SC", textDark: true },
+            "spotify": { bg: "#1ED760", label: "SP" },
+            "twitch": { bg: "#9146FF", label: "TW" },
+            "pinterest": { bg: "#BD081C", label: "PIN" },
+            "reddit": { bg: "#FF4500", label: "RD" },
+            "website": { bg: "#6366F1", label: "WEB" },
+            "email": { bg: "#EA4335", label: "MAIL" },
+            "phone": { bg: "#10B981", label: "CALL" }
+        };
+
+        let cardData = null;
+        let profileData = null;
+        let pageMode = "card"; // "card" or "profile"
+
+        function decodeBase64(base64Url) {
+            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            while (base64.length % 4) base64 += '=';
+            const binary = atob(base64);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            return new TextDecoder().decode(bytes);
+        }
+
+        function initPage() {
+            try {
+                const hash = window.location.hash.substring(1);
+                const params = new URLSearchParams(hash);
+                const typeParam = params.get('type');
+                const encodedData = params.get('data');
+
+                if (encodedData) {
+                    const jsonStr = decodeBase64(encodedData);
+                    const parsed = JSON.parse(jsonStr);
+
+                    if (typeParam === 'profile' || parsed.links !== undefined || parsed.username !== undefined) {
+                        pageMode = "profile";
+                        profileData = parsed;
+                    } else {
+                        pageMode = "card";
+                        cardData = parsed;
+                    }
+                } else if (typeParam === 'profile') {
+                    pageMode = "profile";
+                    profileData = {
+                        displayName: params.get('name') || "Digital Bio Profile",
+                        username: params.get('user') || "creator",
+                        bio: params.get('bio') || "Connect with me across all social platforms.",
+                        theme: params.get('theme') || "royal_sapphire",
+                        links: []
+                    };
+                } else {
+                    // Fallback to demo visiting card
+                    pageMode = "card";
+                    cardData = {
+                        fullName: "John Doe",
+                        jobTitle: "Product Designer",
+                        company: "Example Company",
+                        phoneNumber: "+1 234 567 8900",
+                        email: "johndoe@example.com",
+                        website: "https://example.com",
+                        location: "New York, USA",
+                        bio: "Digital creator and designer crafting modern experiences.",
+                        templateId: "royal_sapphire",
+                        socialLinks: [
+                            { platform: "linkedin", formattedUrl: "https://linkedin.com" },
+                            { platform: "github", formattedUrl: "https://github.com" },
+                            { platform: "whatsapp", formattedUrl: "https://wa.me/1234567890" }
+                        ]
+                    };
+                }
+            } catch (e) {
+                console.warn("Error parsing data from hash:", e);
+                pageMode = "card";
+            }
+
+            if (pageMode === "profile") {
+                renderProfileView();
+            } else {
+                renderCardView();
+            }
+        }
+
+        function renderProfileView() {
+            document.getElementById('visitingCardSection').style.display = 'none';
+            document.getElementById('socialProfileSection').style.display = 'block';
+
+            const themeKey = profileData.theme || "royal_sapphire";
+            const theme = THEMES[themeKey] || THEMES["royal_sapphire"];
+            applyContainerTheme(theme);
+
+            document.title = (profileData.displayName || "Social Profile Hub") + " (@" + (profileData.username || "profile") + ")";
+            document.getElementById('footerText').innerText = "QR Code Studio • Social Profile Hub";
+
+            // Avatar & Names
+            const avatarEl = document.getElementById('profileAvatar');
+            const initials = (profileData.displayName || "SH")
+                .trim()
+                .split(/\s+/)
+                .slice(0, 2)
+                .map(w => w.charAt(0).toUpperCase())
+                .join('') || "SH";
+            avatarEl.innerText = initials;
+            avatarEl.style.borderColor = theme.accent;
+            avatarEl.style.color = theme.accent;
+
+            document.getElementById('profileDisplayName').innerText = profileData.displayName || "Social Creator";
+            const badge = document.getElementById('profileBadge');
+            badge.style.backgroundColor = theme.accent;
+            badge.style.color = "#051024";
+
+            const handleEl = document.getElementById('profileHandle');
+            handleEl.innerText = "@" + (profileData.username || "profile").replace("@", "");
+            handleEl.style.color = theme.accent;
+
+            if (profileData.bio) {
+                const bioEl = document.getElementById('profileBio');
+                bioEl.innerText = profileData.bio;
+                bioEl.style.display = 'block';
+            }
+
+            // Links List
+            const listEl = document.getElementById('profileLinksList');
+            listEl.innerHTML = '';
+
+            const links = profileData.links || [];
+            if (links.length > 0) {
+                links.forEach(link => {
+                    const platformId = (link.platform || "website").toLowerCase();
+                    const conf = PLATFORM_COLORS[platformId] || { bg: "#6366F1", label: platformId.slice(0, 2).toUpperCase() };
+                    const url = link.url || "#";
+                    const title = link.title || platformId.charAt(0).toUpperCase() + platformId.slice(1);
+
+                    const cardHtml = `
+                        <a href="${url}" target="_blank" class="bio-link-card">
+                            <div class="bio-link-icon-box" style="background-color: ${conf.bg}25; color: ${conf.textDark ? '#000000' : conf.bg}; border: 1.5px solid ${conf.bg}70;">
+                                <span>${conf.label}</span>
+                            </div>
+                            <div class="bio-link-info">
+                                <div class="bio-link-title">${title}</div>
+                                <div class="bio-link-sub">${url}</div>
+                            </div>
+                            <div class="bio-link-arrow">→</div>
+                        </a>
+                    `;
+                    listEl.innerHTML += cardHtml;
+                });
+            } else {
+                listEl.innerHTML = `<div style="text-align:center; padding: 20px; color:#94A3B8; font-size:14px;">No social links added yet.</div>`;
+            }
+        }
+
+        function renderCardView() {
+            document.getElementById('socialProfileSection').style.display = 'none';
+            document.getElementById('visitingCardSection').style.display = 'block';
+
+            const templateKey = cardData.templateId || "modern_tech";
+            const theme = THEMES[templateKey] || THEMES["modern_tech"];
+            applyContainerTheme(theme);
+
+            document.title = (cardData.fullName || "Digital Card") + " - Visiting Card";
+            document.getElementById('footerText').innerText = "QR Code Studio • Digital Visiting Card";
+
+            const avatarEl = document.getElementById('cardAvatar');
+            const words = (cardData.fullName || "VC").trim().split(/\s+/);
+            const initials = words.slice(0, 2).map(w => w.charAt(0).toUpperCase()).join('') || "VC";
+            avatarEl.innerText = initials;
+            avatarEl.style.borderColor = theme.accent;
+            avatarEl.style.color = theme.accent;
+
+            document.getElementById('cardFullName').innerText = cardData.fullName || "Executive Contact";
+
+            const jobEl = document.getElementById('cardJobTitle');
+            if (cardData.jobTitle) {
+                jobEl.innerText = cardData.jobTitle;
+                jobEl.style.color = theme.accent;
+                jobEl.style.display = 'block';
+            }
+
+            const compEl = document.getElementById('cardCompany');
+            if (cardData.company) {
+                compEl.innerText = cardData.company;
+                compEl.style.display = 'block';
+            }
+
+            const bioEl = document.getElementById('cardBio');
+            if (cardData.bio) {
+                bioEl.innerText = cardData.bio;
+                bioEl.style.display = 'block';
+            }
+
+            // Quick Contact Buttons
+            if (cardData.phoneNumber) {
+                const callBtn = document.getElementById('quickCall');
+                callBtn.href = 'tel:' + cardData.phoneNumber;
+                callBtn.style.display = 'flex';
+
+                const waDigits = cardData.phoneNumber.replace(/[^0-9]/g, '');
+                const waBtn = document.getElementById('quickWhatsApp');
+                waBtn.href = 'https://wa.me/' + waDigits;
+                waBtn.style.display = 'flex';
+            }
+
+            if (cardData.email) {
+                const emailBtn = document.getElementById('quickEmail');
+                emailBtn.href = 'mailto:' + cardData.email;
+                emailBtn.style.display = 'flex';
+            }
+
+            if (cardData.website) {
+                const webBtn = document.getElementById('quickWeb');
+                const url = cardData.website.startsWith('http') ? cardData.website : 'https://' + cardData.website;
+                webBtn.href = url;
+                webBtn.style.display = 'flex';
+            }
+
+            // Contact list
+            const listEl = document.getElementById('cardContactList');
+            listEl.innerHTML = '';
+
+            if (cardData.phoneNumber) {
+                listEl.innerHTML += `
+                    <a href="tel:${cardData.phoneNumber}" class="contact-item">
+                        <span style="font-size:18px;">📞</span>
+                        <span>${cardData.phoneNumber}</span>
+                    </a>
+                `;
+            }
+
+            if (cardData.email) {
+                listEl.innerHTML += `
+                    <a href="mailto:${cardData.email}" class="contact-item">
+                        <span style="font-size:18px;">✉️</span>
+                        <span>${cardData.email}</span>
+                    </a>
+                `;
+            }
+
+            if (cardData.website) {
+                const url = cardData.website.startsWith('http') ? cardData.website : 'https://' + cardData.website;
+                listEl.innerHTML += `
+                    <a href="${url}" target="_blank" class="contact-item">
+                        <span style="font-size:18px;">🌐</span>
+                        <span>${cardData.website}</span>
+                    </a>
+                `;
+            }
+
+            if (cardData.location) {
+                listEl.innerHTML += `
+                    <div class="contact-item">
+                        <span style="font-size:18px;">📍</span>
+                        <span>${cardData.location}</span>
+                    </div>
+                `;
+            }
+
+            // Social links
+            const socialLinks = cardData.socialLinks || [];
+            if (socialLinks.length > 0) {
+                const socialEl = document.getElementById('cardSocialChips');
+                socialEl.innerHTML = '';
+                socialLinks.forEach(link => {
+                    const url = link.formattedUrl || link.rawValue || "#";
+                    const name = link.platform ? link.platform.replace('_', ' ') : 'Link';
+                    socialEl.innerHTML += `
+                        <a href="${url}" target="_blank" class="social-chip">
+                            <span>${name}</span>
+                        </a>
+                    `;
+                });
+                socialEl.style.display = 'flex';
+            }
+        }
+
+        function applyContainerTheme(theme) {
+            const cardEl = document.getElementById('cardContainer');
+            cardEl.style.background = theme.bg;
+            cardEl.style.borderColor = theme.border;
+            cardEl.style.boxShadow = `0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 40px ${theme.shadow}`;
+        }
+
+        function saveContactToPhone() {
+            if (!cardData) return;
+            let vcard = "BEGIN:VCARD\nVERSION:3.0\n";
+            if (cardData.fullName) vcard += `FN:${cardData.fullName}\n`;
+            if (cardData.company) vcard += `ORG:${cardData.company}\n`;
+            if (cardData.jobTitle) vcard += `TITLE:${cardData.jobTitle}\n`;
+            if (cardData.phoneNumber) vcard += `TEL;TYPE=CELL:${cardData.phoneNumber}\n`;
+            if (cardData.email) vcard += `EMAIL;TYPE=INTERNET:${cardData.email}\n`;
+            if (cardData.website) vcard += `URL:${cardData.website}\n`;
+            if (cardData.location) vcard += `ADR;TYPE=WORK:;;${cardData.location};;;;\n`;
+            if (cardData.bio) vcard += `NOTE:${cardData.bio}\n`;
+            vcard += "END:VCARD";
+
+            const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            const filename = (cardData.fullName || "contact").trim().replace(/\s+/g, '_') + '.vcf';
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        function shareProfilePage() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.title,
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert("Profile Link copied to clipboard!");
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', initPage);
+        window.addEventListener('hashchange', initPage);
+    </script>
+</body>
+</html>
